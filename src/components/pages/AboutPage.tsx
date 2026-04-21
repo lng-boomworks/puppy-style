@@ -1,8 +1,9 @@
 import { Navbar } from "../Navbar";
 import { Footer } from "../Footer";
 import { Button } from "../Button";
-import { PawPrint, PawTrail } from "../PawPrint";
+import { PawTrail } from "../PawPrint";
 import { Heart, Stamp, Sparkles, Scissors } from "lucide-react";
+import { withBase } from "../../utils/url";
 
 const values = [
   { icon: Heart,    title: "Dog-first, always",        desc: "If a dog isn't coping, we stop. The groom can wait. Trust can't." },
@@ -36,8 +37,13 @@ export function AboutPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="polaroid polaroid-rotate-l">
-              <div className="aspect-[4/5] bg-ivory flex items-center justify-center rounded-sm">
-                <PawPrint size={80} color="var(--color-teal-deep)" />
+              <div className="aspect-[4/5] bg-ivory overflow-hidden rounded-sm">
+                <img
+                  src={withBase("/images/dog-photos/dog-cockapoo.jpg")}
+                  alt="Biscuit the cockapoo at Puppy Style"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
               <p className="font-script text-[22px] text-teal-deep text-center mt-3">
                 the salon + Biscuit, 2024

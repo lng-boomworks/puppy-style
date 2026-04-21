@@ -2,24 +2,15 @@ import { Navbar } from "../Navbar";
 import { Footer } from "../Footer";
 import { Button } from "../Button";
 import { PawPrint, PawTrail } from "../PawPrint";
-import { Camera } from "lucide-react";
+import { withBase } from "../../utils/url";
 
 const before_after = [
-  { name: "Biscuit", breed: "Cockapoo",         caption: "the transformation arc" },
-  { name: "Maple",   breed: "Golden Retriever", caption: "fluff level: expert" },
-  { name: "Nacho",   breed: "Schnauzer",        caption: "new haircut, same vibes" },
-  { name: "Willow",  breed: "Yorkie",           caption: "tiny dog, big personality" },
-  { name: "Theo",    breed: "Labradoodle",      caption: "from mop to masterpiece" },
-  { name: "Bean",    breed: "Shih Tzu",         caption: "bow game: strong" },
-];
-
-const swatches = [
-  "var(--color-teal-pale)",
-  "var(--color-lavender-light)",
-  "var(--color-sage-light)",
-  "var(--color-ivory)",
-  "var(--color-teal-pale)",
-  "var(--color-lavender-light)",
+  { name: "Biscuit", breed: "Cockapoo",         caption: "the transformation arc",     image: "/images/dog-photos/dog-cockapoo.jpg" },
+  { name: "Maple",   breed: "Golden Retriever", caption: "fluff level: expert",        image: "/images/dog-photos/dog-1.jpg" },
+  { name: "Nacho",   breed: "Schnauzer",        caption: "new haircut, same vibes",    image: "/images/dog-photos/dog-2.jpg" },
+  { name: "Willow",  breed: "Yorkie",           caption: "tiny dog, big personality",  image: "/images/dog-photos/dog-3.jpg" },
+  { name: "Theo",    breed: "Labradoodle",      caption: "from mop to masterpiece",    image: "/images/dog-photos/dog-4.jpg" },
+  { name: "Bean",    breed: "Shih Tzu",         caption: "bow game: strong",           image: "/images/dog-photos/dog-5.jpg" },
 ];
 
 export function GalleryPage() {
@@ -53,11 +44,13 @@ export function GalleryPage() {
                 style={{ transform: `rotate(${i % 2 === 0 ? "-1.2deg" : "1.2deg"})` }}
               >
                 <div className="polaroid hover:rotate-0 transition-transform duration-300">
-                  <div
-                    className="aspect-square rounded-sm flex items-center justify-center relative overflow-hidden"
-                    style={{ backgroundColor: swatches[i % swatches.length] }}
-                  >
-                    <Camera className="w-14 h-14 text-charcoal/40" />
+                  <div className="aspect-square rounded-sm relative overflow-hidden bg-ivory">
+                    <img
+                      src={withBase(g.image)}
+                      alt={`${g.name} the ${g.breed} after a groom at Puppy Style`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                     <span className="absolute top-3 left-3 text-[11px] font-semibold uppercase tracking-wider bg-white/90 px-2 py-0.5 rounded-full">
                       before · after
                     </span>

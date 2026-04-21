@@ -294,11 +294,13 @@ export function HomePage() {
                   </div>
                 </div>
 
-                <div className="aspect-square rounded-2xl bg-ivory flex items-center justify-center mb-5 overflow-hidden">
-                  <div className="text-center text-text-muted text-sm">
-                    <PawPrint size={70} color="var(--color-teal-deep)" className="mx-auto mb-2" />
-                    photo of this month's pup
-                  </div>
+                <div className="aspect-square rounded-2xl bg-ivory mb-5 overflow-hidden">
+                  <img
+                    src={withBase("/images/dog-photos/dog-cavapoo.jpg")}
+                    alt="Mango the cavapoo, Puppy Style's Dog of the Month"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
 
                 <h3 className="mb-1 text-charcoal">Mango</h3>
