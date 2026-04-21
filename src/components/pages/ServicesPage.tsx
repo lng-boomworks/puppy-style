@@ -1,119 +1,183 @@
 import { Navbar } from "../Navbar";
 import { Footer } from "../Footer";
-import { FadeIn } from "../FadeIn";
 import { Button } from "../Button";
-import { Lightbulb, BarChart3, Users, CheckCircle2 } from "lucide-react";
+import { PawPrint, PawTrail } from "../PawPrint";
+import {
+  Scissors, Sparkles, Heart, Smile, Ear, Wand, Check,
+} from "lucide-react";
 
-function CheckItem({ children }: { children: React.ReactNode }) {
-  return (
-    <li className="flex gap-3">
-      <CheckCircle2 className="w-5 h-5 text-sage shrink-0 mt-1" />
-      <span className="text-text-body">{children}</span>
-    </li>
-  );
-}
-
-const services = [
-  { id: "service-one", icon: Lightbulb, title: "Service One", desc: "A brief overview of this service and the problem it solves for your clients.", bullets: ["Key benefit or deliverable one", "Key benefit or deliverable two", "Key benefit or deliverable three", "Key benefit or deliverable four"] },
-  { id: "service-two", icon: BarChart3, title: "Service Two", desc: "A brief overview of this service and the problem it solves for your clients.", bullets: ["Key benefit or deliverable one", "Key benefit or deliverable two", "Key benefit or deliverable three", "Key benefit or deliverable four"] },
-  { id: "service-three", icon: Users, title: "Service Three", desc: "A brief overview of this service and the problem it solves for your clients.", bullets: ["Key benefit or deliverable one", "Key benefit or deliverable two", "Key benefit or deliverable three", "Key benefit or deliverable four"] },
+const serviceGroups = [
+  {
+    title: "Grooming",
+    blurb: "The full suite — from splash & dash to the red-carpet works.",
+    color: "var(--color-teal-deep)",
+    services: [
+      {
+        icon: Scissors,
+        name: "The Full Works",
+        tag: "Full Groom",
+        desc: "Bath, blow-dry, breed-appropriate trim, tidy, nails, pads, ears, eyes. Head-to-tail gorgeous.",
+        price: "from €45",
+        time: "2 – 3 hrs",
+      },
+      {
+        icon: Sparkles,
+        name: "Splash & Dash",
+        tag: "Bath & Brush",
+        desc: "Warm bath, gentle shampoo, conditioner, deep brush-out, fluff blow-dry, ears & nails check.",
+        price: "from €28",
+        time: "60 – 90 min",
+      },
+      {
+        icon: Heart,
+        name: "Puppy's First Spa Day",
+        tag: "Puppy Pamper (under 6 months)",
+        desc: "A calm introduction to the salon — gentle handling, tiny splash, soft dryer, many treats, zero pressure.",
+        price: "from €25",
+        time: "45 – 60 min",
+      },
+    ],
+  },
+  {
+    title: "Specialist Care",
+    blurb: "Extras and specialist treatments — add to any groom or book standalone.",
+    color: "var(--color-charcoal)",
+    services: [
+      {
+        icon: Ear,
+        name: "Ear Cleaning",
+        tag: "Add-on or standalone",
+        desc: "Gentle ear check, clean, and pluck if needed. Calm, careful, and treat-stocked.",
+        price: "€12",
+        time: "15 min",
+      },
+      {
+        icon: Wand,
+        name: "Hand Stripping",
+        tag: "Terriers & wire coats",
+        desc: "Traditional hand stripping for terriers and wire-coated breeds — keeps the coat in top condition.",
+        price: "from €55",
+        time: "2 – 3 hrs",
+      },
+      {
+        icon: Smile,
+        name: "Dental Dates",
+        tag: "Ultrasound Teeth Cleaning",
+        desc: "Modern, no-anaesthetic ultrasound cleaning. Brighter smile, better breath, happy vet checks.",
+        price: "€35",
+        time: "45 min",
+      },
+    ],
+  },
 ];
 
-interface ServicesPageProps {
-  heroHeading?: string;
-  heroSubheading?: string;
-}
-
-export function ServicesPage({
-  heroHeading = "What we do",
-  heroSubheading = "A range of services tailored to your needs.",
-}: ServicesPageProps) {
+export function ServicesPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-[72px]">
-        <div className="flex flex-col bg-white">
-          <section className="bg-cream py-20 md:py-32">
-            <div className="max-w-4xl mx-auto px-4 text-center">
-              <FadeIn>
-                <h1 className="mb-6">{heroHeading}</h1>
-                <p className="text-xl text-text-muted">{heroSubheading}</p>
-              </FadeIn>
-            </div>
-          </section>
 
-          <section className="py-20 md:py-32">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
-              {services.map((service) => (
-                <FadeIn key={service.id} delay={0.1} className="scroll-mt-32" id={service.id}>
-                  <div className="flex flex-col md:flex-row gap-8 lg:gap-16">
-                    <div className="md:w-1/3 shrink-0">
-                      <div className="w-16 h-16 bg-teal-pale rounded-2xl flex items-center justify-center mb-6 border border-teal-light">
-                        <service.icon className="w-8 h-8 text-teal-deep" strokeWidth={1.5} />
-                      </div>
-                      <h2 className="text-3xl mb-4">{service.title}</h2>
-                      <p className="text-text-muted text-lg">{service.desc}</p>
-                    </div>
-                    <div className="md:w-2/3 bg-ivory rounded-2xl p-8 md:p-10 border border-border/50">
-                      <ul className="space-y-5">
-                        {service.bullets.map((bullet, idx) => (
-                          <li key={idx} className="flex gap-4">
-                            <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                              <div className="w-2 h-2 rounded-full bg-sage" />
-                            </div>
-                            <span className="text-lg text-text-body">{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </section>
+      {/* Header */}
+      <section className="relative pt-36 pb-20 bg-paws overflow-hidden">
+        <div className="absolute top-20 -left-16 w-72 h-72 blob-mask bg-lavender-light opacity-80" aria-hidden="true" />
+        <div className="absolute top-40 -right-12 w-80 h-80 blob-mask-alt bg-teal-pale opacity-90" aria-hidden="true" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="font-script text-[26px] text-teal-deep mb-2">the menu</p>
+          <h1 className="mb-5">Services & prices</h1>
+          <p className="text-[18px] text-text-muted leading-relaxed max-w-2xl mx-auto">
+            Every groom is one-on-one, unhurried, and tailored to your dog's
+            breed, coat, and temperament. Prices are a guide — huskies and
+            hairy monsters may nudge upward. We'll always confirm before we start.
+          </p>
+        </div>
+      </section>
 
-          <section className="py-20 bg-teal-pale">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <FadeIn className="mb-12">
-                <h2 className="text-center mb-12">Clarity on boundaries</h2>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="bg-white p-8 rounded-2xl border border-border shadow-sm">
-                    <h3 className="text-xl text-teal-deep mb-6 pb-4 border-b border-border">What we do</h3>
-                    <ul className="space-y-4">
-                      <CheckItem>Deliver high-quality, professional services</CheckItem>
-                      <CheckItem>Provide clear communication at every stage</CheckItem>
-                      <CheckItem>Work collaboratively with your existing team</CheckItem>
-                      <CheckItem>Offer honest advice based on your situation</CheckItem>
-                    </ul>
+      {/* Services grid */}
+      {serviceGroups.map((group, gi) => (
+        <section key={group.title} className={gi % 2 === 0 ? "py-20" : "py-20 bg-ivory"}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <span
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${group.color}22`, color: group.color }}
+                  >
+                    <PawPrint size={20} color={group.color} />
+                  </span>
+                  <h2 className="mb-0">{group.title}</h2>
+                </div>
+                <p className="text-[16px] text-text-muted max-w-xl">{group.blurb}</p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+              {group.services.map((s) => (
+                <div
+                  key={s.name}
+                  className="bg-white rounded-3xl p-7 border border-border hover:-translate-y-1 hover:shadow-tactile transition-all duration-300"
+                >
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 rotate-[-4deg]"
+                    style={{ backgroundColor: `${group.color}22`, color: group.color }}
+                  >
+                    <s.icon className="w-6 h-6" />
                   </div>
-                  <div className="bg-white p-8 rounded-2xl border border-border shadow-sm">
-                    <h3 className="text-xl text-charcoal mb-6 pb-4 border-b border-border">What we don't do</h3>
-                    <ul className="space-y-4 text-text-muted">
-                      {["Service or activity outside your scope", "Another out-of-scope item", "A third boundary to set expectations", "A fourth boundary for clarity"].map((item, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="text-red-400 font-bold shrink-0 mt-0.5">&times;</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <p className="font-script text-[18px] text-teal-deep mb-1">{s.tag}</p>
+                  <h3 className="mb-3 text-charcoal">{s.name}</h3>
+                  <p className="text-[14.5px] text-text-muted leading-relaxed mb-5">{s.desc}</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-dashed border-border">
+                    <span className="text-[17px] font-semibold text-charcoal">{s.price}</span>
+                    <span className="text-[12px] text-text-muted uppercase tracking-wider">{s.time}</span>
                   </div>
                 </div>
-              </FadeIn>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
+      ))}
 
-          <section className="py-24 text-center px-4 bg-teal-deep text-white">
-            <FadeIn className="max-w-3xl mx-auto">
-              <h2 className="text-white mb-6">Not sure which service you need?</h2>
-              <p className="text-lg text-white/70 mb-10">Get in touch and we'll help you find the right fit.</p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button variant="white" href="/contact">Get in touch</Button>
-                <Button variant="outline-white" href="tel:+34650708896">Call +34 650 70 88 96</Button>
+      {/* Add-on band */}
+      <section className="py-20 bg-charcoal text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="font-script text-[26px] text-teal-light mb-2">the little extras</p>
+          <h2 className="text-white mb-8">Quick add-ons</h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-left">
+            {[
+              { item: "Blueberry facial",    price: "€6"  },
+              { item: "De-shed treatment",   price: "€12" },
+              { item: "Nail file (Dremel)",  price: "€8"  },
+              { item: "Teeth brush",         price: "€6"  },
+              { item: "Pawdicure & balm",    price: "€10" },
+              { item: "Bows, bandanas & co.",price: "free" },
+              { item: "Flea shampoo",        price: "€8"  },
+              { item: "Colour-safe conditioner", price: "€5" },
+            ].map((a) => (
+              <div key={a.item} className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between">
+                <span className="flex items-center gap-2 text-[14px]">
+                  <Check className="w-4 h-4 text-teal-light" />
+                  {a.item}
+                </span>
+                <span className="text-[14px] font-semibold text-teal-light">{a.price}</span>
               </div>
-            </FadeIn>
-          </section>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      <PawTrail color="var(--color-teal-deep)" count={9} className="my-12" />
+
+      {/* CTA */}
+      <section className="pb-28">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="mb-4">Not sure which to pick?</h2>
+          <p className="text-[17px] text-text-muted mb-7">
+            Drop us a quick note about your dog and we'll recommend the right
+            option — no upsell, promise.
+          </p>
+          <Button href="https://wa.me/34650708896" size="lg" external>Get a recommendation</Button>
+        </div>
+      </section>
+
       <Footer />
     </>
   );

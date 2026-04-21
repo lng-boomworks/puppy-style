@@ -1,57 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
-import { Button } from '../components/Button';
-import { withBase } from '../utils/url';
-import { getEntry } from 'astro:content';
-
-const page = await getEntry('pages', 'team');
-const d = page.data;
+import { TeamPage } from '../components/pages/TeamPage';
 ---
 
-<Base title={d.seo_title ?? d.title} description={d.seo_description}>
-  <Navbar client:load />
-
-  <main class="pt-[72px]">
-    <section class="team-hero max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-      <h1>{d.hero_heading}</h1>
-      <p class="mt-6 text-lg text-text-muted max-w-2xl mx-auto">{d.hero_subheading}</p>
-    </section>
-
-    <section class="team-intro max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-      <p class="text-lg leading-relaxed">{`{{TEAM_INTRO}}`}</p>
-    </section>
-
-    <section class="team-profiles max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[1, 2, 3].map((n) => (
-          <article class="profile-card bg-card rounded-2xl p-6 shadow-sm border border-border">
-            <!-- Replace with relevant team photo -->
-            <img src={withBase("/images/placeholder-team.jpg")} alt={`{{TEAM_MEMBER_${n}_PHOTO_ALT}}`} class="w-full aspect-square object-cover rounded-xl mb-5" />
-            <h3 class="text-xl">{`{{TEAM_MEMBER_${n}_NAME}}`}</h3>
-            <p class="text-sm font-medium text-teal-mid mt-1">{`{{TEAM_MEMBER_${n}_ROLE}}`}</p>
-            <p class="mt-3 text-[15px] leading-relaxed text-text-muted">{`{{TEAM_MEMBER_${n}_BIO}}`}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="team-credentials max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <h2 class="text-center">{`{{TEAM_CREDENTIALS_HEADING}}`}</h2>
-      <p class="text-center mt-4 text-text-muted max-w-2xl mx-auto">{`{{TEAM_CREDENTIALS_BODY}}`}</p>
-    </section>
-
-    <section class="team-cta bg-teal-pale">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <h2>{`{{TEAM_CTA_HEADING}}`}</h2>
-        <p class="mt-4 text-text-muted">{`{{TEAM_CTA_TEXT}}`}</p>
-        <div class="mt-8 flex justify-center">
-          <Button href="/contact" client:load>{`{{TEAM_CTA_LABEL}}`}</Button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <Footer client:load />
+<Base
+  title="Meet the team — Puppy Style La Marina"
+  description="The small, warm team behind Puppy Style — master groomers, daycare humans, and unapologetic dog people."
+>
+  <TeamPage client:load />
 </Base>

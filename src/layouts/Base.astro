@@ -52,11 +52,13 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <link rel="icon" type="image/png" sizes="32x32" href={withBase("/favicon-32.png")} />
     <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />
 
-    <!-- Fonts — Fraunces (display), Nunito (body), Caveat (accent/handwritten) -->
+    <!-- Fonts — per Brand Book: clean sans-serif for all structural text (Nunito),
+         script reserved for the "Style" wordmark element only (Caveat). Heavy
+         serifs (Fraunces) removed to comply with brand-book "What to Avoid". -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Caveat:wght@400;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet" />
 
     <!-- JSON-LD: LocalBusiness (every page) -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify({

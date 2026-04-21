@@ -1,177 +1,213 @@
 import { useState } from "react";
 import { Navbar } from "../Navbar";
 import { Footer } from "../Footer";
-import { FadeIn } from "../FadeIn";
 import { Button } from "../Button";
-import { withBase } from "../../utils/url";
-import { Mail, Phone, Calendar, CheckCircle2 } from "lucide-react";
+import { PawPrint } from "../PawPrint";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 
 interface ContactPageProps {
-  heroHeading?: string;
-  heroSubheading?: string;
   email?: string;
   phone?: string;
   address?: string;
-  calendlyUrl?: string;
 }
 
 export function ContactPage({
-  heroHeading = "Get in touch",
-  heroSubheading = "We aim to respond within one business day.",
   email = "puppystyle2019@gmail.com",
   phone = "+34 650 70 88 96",
   address = "C/ Mediterráneo 8, C.C. Bahía de las Dunas, La Marina, 03177",
-  calendlyUrl = "https://wa.me/34650708896",
 }: ContactPageProps) {
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [sent, setSent] = useState(false);
 
   return (
     <>
       <Navbar />
-      <main className="pt-[72px]">
-        <div className="flex flex-col bg-cream min-h-screen pb-24">
-          <section className="py-20 text-center px-4">
-            <FadeIn>
-              <h1 className="mb-6">{heroHeading}</h1>
-              <p className="text-xl text-text-muted">{heroSubheading}</p>
-            </FadeIn>
-          </section>
 
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="grid lg:grid-cols-12 gap-12 items-start">
-              <FadeIn className="lg:col-span-4 space-y-6">
-                <a href={`mailto:${email}`} className="flex items-center gap-4 p-6 bg-white rounded-2xl border border-border hover:border-teal-mid hover:shadow-md transition-all group">
-                  <div className="w-12 h-12 rounded-full bg-teal-pale flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-teal-deep" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-text-muted mb-1">Email us</div>
-                    <div className="font-medium text-teal-deep group-hover:underline">{email}</div>
-                  </div>
-                </a>
-                <a href={`tel:${phone?.replace(/\s/g, '')}`} className="flex items-center gap-4 p-6 bg-white rounded-2xl border border-border hover:border-teal-mid hover:shadow-md transition-all group">
-                  <div className="w-12 h-12 rounded-full bg-sage-light/30 flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-sage" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-text-muted mb-1">Call us</div>
-                    <div className="font-medium text-teal-deep group-hover:underline">{phone}</div>
-                  </div>
-                </a>
-                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-6 bg-teal-deep text-white rounded-2xl hover:opacity-90 hover:shadow-md transition-all">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                    <Calendar className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-teal-light/80 mb-1">Schedule a chat</div>
-                    <div className="font-medium underline underline-offset-2">Book a free call</div>
-                  </div>
-                </a>
-                <div className="p-6 bg-ivory rounded-2xl border border-border mt-8">
-                  <h4 className="font-medium text-teal-deep mb-2">Location</h4>
-                  <p className="text-sm text-text-muted leading-relaxed">
-                    Serving [Your Area]
-                    <br /><br />
-                    {address}
-                  </p>
-                </div>
-              </FadeIn>
+      {/* Header */}
+      <section className="relative pt-36 pb-16 bg-paws overflow-hidden">
+        <div className="absolute top-16 -left-16 w-72 h-72 blob-mask bg-teal-pale opacity-90" aria-hidden="true" />
+        <div className="absolute bottom-0 -right-12 w-80 h-80 blob-mask-alt bg-lavender-light opacity-80" aria-hidden="true" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="font-script text-[26px] text-teal-deep mb-2">say hello</p>
+          <h1 className="mb-5">Book your dog in</h1>
+          <p className="text-[18px] text-text-muted leading-relaxed max-w-2xl mx-auto">
+            New customers get a free 10-minute meet-and-greet before their
+            first groom. Pop your details in below and we'll be in touch
+            within 24 hours — or message us directly on WhatsApp.
+          </p>
+        </div>
+      </section>
 
-              <FadeIn delay={0.2} className="lg:col-span-8 bg-white p-8 md:p-12 rounded-[24px] border border-border shadow-sm">
-                {submitted ? (
-                  <div className="text-center py-12">
-                    <CheckCircle2 className="w-16 h-16 text-sage mx-auto mb-6" />
-                    <h2 className="text-2xl mb-4">Thank you for getting in touch</h2>
-                    <p className="text-text-muted text-lg mb-8">We aim to respond within one business day.</p>
-                    <Button href="/" variant="ghost">Back to home</Button>
-                  </div>
-                ) : (
-                <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setSubmitting(true);
-                    setError("");
-                    const form = e.currentTarget;
-                    const data = new FormData(form);
-                    data.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY");
-                    data.append("subject", `Website enquiry from ${data.get("firstName")} ${data.get("lastName")}`);
-                    data.append("from_name", "Website Contact Form");
-                    try {
-                      const res = await fetch("https://api.web3forms.com/submit", {
-                        method: "POST",
-                        body: data,
-                      });
-                      const result = await res.json();
-                      if (result.success) {
-                        setSubmitted(true);
-                      } else {
-                        setError("Something went wrong. Please try again or email us directly.");
-                      }
-                    } catch {
-                      setError("Something went wrong. Please try again or email us directly.");
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  className="space-y-6"
-                >
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-text-body mb-2" htmlFor="firstName">First name <span className="text-red-500">*</span></label>
-                        <input name="firstName" id="firstName" required className="w-full px-4 py-3 rounded-lg border border-border focus:ring-teal-mid focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-cream/50" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-text-body mb-2" htmlFor="lastName">Last name <span className="text-red-500">*</span></label>
-                        <input name="lastName" id="lastName" required className="w-full px-4 py-3 rounded-lg border border-border focus:ring-teal-mid focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-cream/50" />
-                      </div>
-                    </div>
+      {/* Contact + form */}
+      <section className="pb-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_1.3fr] gap-12">
+          {/* Info */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-3xl p-7 border border-border shadow-tactile">
+              <div className="flex items-center gap-3 mb-5">
+                <PawPrint size={30} color="var(--color-teal-deep)" />
+                <h3 className="mb-0 text-charcoal">Visit us</h3>
+              </div>
+              <ul className="space-y-4 text-[15px] text-text-muted">
+                <li className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 mt-0.5 text-teal-deep flex-shrink-0" />
+                  <span>{address}</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Phone className="w-5 h-5 mt-0.5 text-teal-deep flex-shrink-0" />
+                  <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-charcoal">
+                    {phone}
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 mt-0.5 text-teal-deep flex-shrink-0" />
+                  <a href={`mailto:${email}`} className="hover:text-charcoal break-all">
+                    {email}
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 mt-0.5 text-teal-deep flex-shrink-0" />
+                  <span>
+                    Tues – Sat · 9am – 6pm<br />
+                    Closed Sundays & Mondays
+                  </span>
+                </li>
+              </ul>
+              <div className="mt-5 pt-5 border-t border-dashed border-border">
+                <Button href="https://wa.me/34650708896" size="sm" className="w-full" external>
+                  Chat on WhatsApp
+                </Button>
+              </div>
+            </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-text-body mb-2" htmlFor="email">Email <span className="text-red-500">*</span></label>
-                        <input name="email" id="email" type="email" required className="w-full px-4 py-3 rounded-lg border border-border focus:ring-teal-mid focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-cream/50" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-text-body mb-2" htmlFor="phone">Phone number</label>
-                        <input name="phone" id="phone" type="tel" className="w-full px-4 py-3 rounded-lg border border-border focus:ring-teal-mid focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-cream/50" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-text-body mb-2" htmlFor="message">Message <span className="text-red-500">*</span></label>
-                      <textarea name="message" id="message" rows={4} required minLength={10} className="w-full px-4 py-3 rounded-lg border border-border focus:ring-teal-mid focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-cream/50 resize-none" placeholder="How can we help?" />
-                    </div>
-
-                    <div className="pt-4">
-                      <label className="flex items-start gap-3 cursor-pointer">
-                        <input type="checkbox" name="consent" required className="w-5 h-5 mt-1 text-teal-deep bg-cream border-border focus:ring-teal-mid rounded" />
-                        <span className="text-sm text-text-muted leading-relaxed">
-                          I consent to my details being stored to respond to this enquiry, in line with the <a href={withBase("/privacy")} target="_blank" className="text-teal-mid underline">Privacy Notice</a>. <span className="text-red-500">*</span>
-                        </span>
-                      </label>
-                    </div>
-
-                    {error && (
-                      <div className="p-4 bg-red-50 rounded-xl border border-red-200 text-red-800 text-sm">
-                        {error}
-                      </div>
-                    )}
-
-                    <div className="pt-6">
-                      <Button type="submit" className="w-full sm:w-auto px-10" disabled={submitting}>
-                        {submitting ? "Sending..." : "Send your message"}
-                      </Button>
-                    </div>
-                  </form>
-                )}
-              </FadeIn>
+            <div className="bg-charcoal text-white rounded-3xl p-7 relative overflow-hidden">
+              <div className="absolute inset-0 bg-paws opacity-15" aria-hidden="true" />
+              <div className="relative">
+                <p className="font-script text-[22px] text-teal-light mb-1">first-timer?</p>
+                <p className="text-[15px] text-white/80 leading-relaxed">
+                  New dogs get a free meet-and-greet. We'll sniff each other
+                  out, you tell us what your pup needs, and we'll quote you
+                  right there. Zero pressure.
+                </p>
+              </div>
             </div>
           </div>
+
+          {/* Form */}
+          <div className="bg-white rounded-3xl p-8 md:p-10 border border-border shadow-tactile">
+            {!sent ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSent(true);
+                }}
+                className="space-y-5"
+              >
+                <h3 className="mb-2 text-charcoal">Tell us about your pup</h3>
+                <p className="text-[14px] text-text-muted mb-4">
+                  The more you can tell us, the better we can prepare. Don't
+                  worry if you don't know everything.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Your name" name="name" required />
+                  <Field label="Phone or email" name="contact" required />
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Dog's name" name="dog" />
+                  <Field label="Breed" name="breed" placeholder="e.g. Cockapoo" />
+                </div>
+
+                <Select label="Which service?" name="service">
+                  <option>Not sure — help me pick</option>
+                  <option>Full Groom</option>
+                  <option>Bath &amp; Brush</option>
+                  <option>Puppy Pamper</option>
+                  <option>Daycare drop-in</option>
+                  <option>Hand Stripping</option>
+                  <option>Ultrasound Teeth Cleaning</option>
+                  <option>Boutique question</option>
+                </Select>
+
+                <Textarea label="Anything we should know?" name="notes" placeholder="Nervous, rescue, first groom, allergies, preferred style…" />
+
+                <Button type="submit">
+                  <Send className="w-4 h-4" />
+                  Send it over
+                </Button>
+
+                <p className="text-[12px] text-text-muted italic">
+                  We'll get back to you within 24 hours (usually much sooner).
+                </p>
+              </form>
+            ) : (
+              <div className="py-12 text-center">
+                <PawPrint size={60} color="var(--color-teal-deep)" className="mx-auto mb-4 animate-bob" />
+                <p className="font-script text-[34px] text-teal-deep mb-1">
+                  got it — thank you!
+                </p>
+                <h3 className="mb-2 text-charcoal">We'll be in touch soon.</h3>
+                <p className="text-text-muted">
+                  Give your pup a scratch from us.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </main>
+      </section>
+
       <Footer />
     </>
+  );
+}
+
+/* ---------- tiny form field helpers ---------- */
+
+function Field({
+  label, name, required, placeholder, type = "text",
+}: { label: string; name: string; required?: boolean; placeholder?: string; type?: string }) {
+  return (
+    <label className="block">
+      <span className="block text-[13px] font-medium text-charcoal mb-1.5">
+        {label} {required && <span className="text-teal-deep">*</span>}
+      </span>
+      <input
+        type={type}
+        name={name}
+        required={required}
+        placeholder={placeholder}
+        className="w-full px-4 py-3 rounded-xl border border-border bg-ivory text-[15px] focus:outline-none focus:border-teal-deep focus:bg-white transition"
+      />
+    </label>
+  );
+}
+
+function Textarea({ label, name, placeholder }: { label: string; name: string; placeholder?: string }) {
+  return (
+    <label className="block">
+      <span className="block text-[13px] font-medium text-charcoal mb-1.5">{label}</span>
+      <textarea
+        name={name}
+        rows={4}
+        placeholder={placeholder}
+        className="w-full px-4 py-3 rounded-xl border border-border bg-ivory text-[15px] focus:outline-none focus:border-teal-deep focus:bg-white transition resize-none"
+      />
+    </label>
+  );
+}
+
+function Select({
+  label, name, children,
+}: { label: string; name: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="block text-[13px] font-medium text-charcoal mb-1.5">{label}</span>
+      <select
+        name={name}
+        className="w-full px-4 py-3 rounded-xl border border-border bg-ivory text-[15px] focus:outline-none focus:border-teal-deep focus:bg-white transition"
+      >
+        {children}
+      </select>
+    </label>
   );
 }

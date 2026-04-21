@@ -1,76 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
-import { Button } from '../components/Button';
-import { withBase } from '../utils/url';
-import { getEntry } from 'astro:content';
-
-const page = await getEntry('pages', 'gallery');
-const d = page.data;
+import { GalleryPage } from '../components/pages/GalleryPage';
 ---
 
-<Base title={d.seo_title ?? d.title} description={d.seo_description}>
-  <Navbar client:load />
-
-  <main class="pt-[72px]">
-    <section class="gallery-hero max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-      <h1>{d.hero_heading}</h1>
-      <p class="mt-6 text-lg text-text-muted max-w-2xl mx-auto">{d.hero_subheading}</p>
-    </section>
-
-    <section class="gallery-intro max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-      <p class="text-lg leading-relaxed">{`{{GALLERY_INTRO}}`}</p>
-    </section>
-
-    <section class="gallery-grid max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-          <!-- Replace with relevant branded image -->
-          <img
-            src={withBase("/images/placeholder.jpg")}
-            alt={`{{GALLERY_IMAGE_${n}_ALT}}`}
-            loading="lazy"
-            class="w-full aspect-square object-cover rounded-xl"
-          />
-        ))}
-      </div>
-    </section>
-
-    <section class="before-after max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <h2 class="text-center mb-10">{`{{BEFORE_AFTER_HEADING}}`}</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[1, 2, 3].map((n) => (
-          <article class="ba-card bg-card rounded-2xl p-5 shadow-sm border border-border">
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <!-- Replace with before photo -->
-                <img src={withBase("/images/placeholder.jpg")} alt={`{{BEFORE_AFTER_${n}_BEFORE_ALT}}`} class="w-full aspect-square object-cover rounded-lg" />
-                <p class="text-xs text-text-muted text-center mt-2">Before</p>
-              </div>
-              <div>
-                <!-- Replace with after photo -->
-                <img src={withBase("/images/placeholder.jpg")} alt={`{{BEFORE_AFTER_${n}_AFTER_ALT}}`} class="w-full aspect-square object-cover rounded-lg" />
-                <p class="text-xs text-text-muted text-center mt-2">After</p>
-              </div>
-            </div>
-            <h3 class="mt-4 text-lg">{`{{BEFORE_AFTER_${n}_PUP_NAME}}`}</h3>
-            <p class="text-sm text-text-muted">{`{{BEFORE_AFTER_${n}_NOTE}}`}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="gallery-cta bg-teal-pale">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <h2>{`{{GALLERY_CTA_HEADING}}`}</h2>
-        <p class="mt-4 text-text-muted">{`{{GALLERY_CTA_TEXT}}`}</p>
-        <div class="mt-8 flex justify-center">
-          <Button href="/contact" client:load>{`{{GALLERY_CTA_LABEL}}`}</Button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <Footer client:load />
+<Base
+  title="Gallery — Puppy Style La Marina"
+  description="Before-and-afters, glow-ups, and genuinely smug-looking dogs walking out of the salon. See some of our favourite recent grooms."
+>
+  <GalleryPage client:load />
 </Base>
