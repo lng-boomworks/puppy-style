@@ -18,10 +18,10 @@ interface ContactPageProps {
 export function ContactPage({
   heroHeading = "Get in touch",
   heroSubheading = "We aim to respond within one business day.",
-  email = "hello@example.com",
-  phone = "01234 567890",
-  address = "Your Town, County, Postcode",
-  calendlyUrl = "https://calendly.com/your-link",
+  email = "puppystyle2019@gmail.com",
+  phone = "+34 650 70 88 96",
+  address = "C/ Mediterráneo 8, C.C. Bahía de las Dunas, La Marina, 03177",
+  calendlyUrl = "https://wa.me/34650708896",
 }: ContactPageProps) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);

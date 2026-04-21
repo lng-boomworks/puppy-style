@@ -114,7 +114,7 @@ export function AboutPage({
               <p className="text-teal-light text-lg mb-10">Get in touch today to see how we can help.</p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Button variant="white" href="/contact">Get in touch</Button>
-                <Button variant="outline-white" href="tel:01234567890">Call 01234 567890</Button>
+                <Button variant="outline-white" href="tel:+34650708896">Call +34 650 70 88 96</Button>
               </div>
             </FadeIn>
           </section>

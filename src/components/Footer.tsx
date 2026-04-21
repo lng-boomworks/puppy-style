@@ -14,9 +14,9 @@ export function Footer() {
               {`{{FOOTER_TAGLINE}}`}
             </p>
             <div className="flex flex-col gap-2 text-[14px]">
-              <a href={`tel:{{CONTACT_PHONE}}`} className="hover:text-white transition-colors">{`{{CONTACT_PHONE}}`}</a>
-              <a href={`mailto:{{CONTACT_EMAIL}}`} className="hover:text-white transition-colors">{`{{CONTACT_EMAIL}}`}</a>
-              <span>{`{{ADDRESS_LINE_1}}, {{CITY}}, {{POSTCODE}}`}</span>
+              <a href="tel:+34650708896" className="hover:text-white transition-colors">+34 650 70 88 96</a>
+              <a href="mailto:puppystyle2019@gmail.com" className="hover:text-white transition-colors">puppystyle2019@gmail.com</a>
+              <span>C/ Mediterráneo 8, C.C. Bahía de las Dunas, La Marina, 03177</span>
             </div>
           </div>
 

@@ -55,11 +55,11 @@ export function Navbar() {
           </ul>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <a href="tel:01234567890" className="flex items-center gap-1.5 text-[15px] font-medium text-teal-deep hover:opacity-80 transition-colors">
+              <a href="tel:+34650708896" className="flex items-center gap-1.5 text-[15px] font-medium text-teal-deep hover:opacity-80 transition-colors">
                 <Phone className="w-3.5 h-3.5" />
-                01234 567890
+                +34 650 70 88 96
               </a>
-              <span className="text-[12px] text-text-muted">Lines open 9am-5pm</span>
+              <span className="text-[12px] text-text-muted">{`{{OPENING_HOURS}}`}</span>
             </div>
             <Button href="/contact">
               Book on WhatsApp
@@ -96,13 +96,13 @@ export function Navbar() {
           </ul>
           <div className="pt-4 border-t border-border flex flex-col gap-3">
             <a
-              href="tel:01234567890"
+              href="tel:+34650708896"
               className="flex items-center justify-center gap-2 w-full px-7 py-3.5 rounded-lg text-[15px] font-medium border-[1.5px] border-teal-mid text-teal-deep hover:bg-teal-pale transition-all duration-200"
             >
               <Phone className="w-4 h-4" />
-              01234 567890
+              +34 650 70 88 96
             </a>
-            <span className="text-center text-[13px] text-text-muted -mt-1">Lines open 9am-5pm</span>
+            <span className="text-center text-[13px] text-text-muted -mt-1">{`{{OPENING_HOURS}}`}</span>
             <Button href="/contact" className="w-full">
               Book on WhatsApp
             </Button>
