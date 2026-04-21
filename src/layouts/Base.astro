@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import { withBase } from '../utils/url';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Dog grooming, daycare and boutique in La Marina, Alicante — bilingual, fun and dog-led.',
+  ogImage = '/images/og-default.jpg',
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Puppy Style" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" href={withBase("/favicon.ico")} sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase("/favicon-32.png")} />
+    <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />
+
+    <!-- Fonts — Fraunces (display), Nunito (body), Caveat (accent/handwritten) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- JSON-LD: LocalBusiness (every page) -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "PetStore",
+      "@id": "https://lng-boomworks.github.io/puppy-style/#business",
+      "name": "Puppy Style",
+      "description": "Dog grooming, daycare and boutique in La Marina, Alicante.",
+      "url": "https://lng-boomworks.github.io/puppy-style/",
+      "telephone": "{{CONTACT_PHONE}}",
+      "email": "{{CONTACT_EMAIL}}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "La Marina",
+        "addressRegion": "Alicante",
+        "postalCode": "{{POSTCODE}}",
+        "addressCountry": "ES"
+      },
+      "priceRange": "€€"
+    })} />
+
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-background text-foreground">
+    <slot />
+  </body>
+</html>

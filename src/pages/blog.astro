@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+import { Button } from '../components/Button';
+import { withBase } from '../utils/url';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'blog');
+const d = page.data;
+---
+
+<Base title={d.seo_title ?? d.title} description={d.seo_description}>
+  <Navbar client:load />
+
+  <main class="pt-[72px]">
+    <section class="blog-hero max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+      <h1>{d.hero_heading}</h1>
+      <p class="mt-6 text-lg text-text-muted max-w-2xl mx-auto">{d.hero_subheading}</p>
+    </section>
+
+    <section class="blog-intro max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+      <p class="text-lg leading-relaxed">{`{{BLOG_INTRO}}`}</p>
+    </section>
+
+    <section class="blog-list max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3].map((n) => (
+          <article class="post-card bg-card rounded-2xl overflow-hidden shadow-sm border border-border">
+            <!-- Replace with relevant post image -->
+            <img src={withBase("/images/placeholder.jpg")} alt={`{{BLOG_POST_${n}_IMAGE_ALT}}`} class="w-full aspect-[16/10] object-cover" />
+            <div class="p-6">
+              <p class="text-xs uppercase tracking-wider text-teal-mid">{`{{BLOG_POST_${n}_CATEGORY}}`}</p>
+              <h3 class="mt-2 text-xl">{`{{BLOG_POST_${n}_TITLE}}`}</h3>
+              <p class="mt-3 text-[15px] text-text-muted leading-relaxed">{`{{BLOG_POST_${n}_EXCERPT}}`}</p>
+              <p class="mt-4 text-xs text-text-muted">{`{{BLOG_POST_${n}_DATE}}`}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="text-center text-text-muted mt-12 text-sm italic">
+        Posts are scaffold placeholders — wire up the <code>blog</code> content collection to replace this grid with real articles.
+      </p>
+    </section>
+
+    <section class="blog-cta bg-teal-pale">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <h2>{`{{BLOG_CTA_HEADING}}`}</h2>
+        <p class="mt-4 text-text-muted">{`{{BLOG_CTA_TEXT}}`}</p>
+        <div class="mt-8 flex justify-center">
+          <Button href="/contact" client:load>{`{{BLOG_CTA_LABEL}}`}</Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer client:load />
+</Base>
